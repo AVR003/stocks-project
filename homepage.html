@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot for Mutual Funds and Stocks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #061d36;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+        }
+
+        header p {
+            font-size: 1.2em;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero h2 {
+            font-size: 2em;
+            color: #061d36;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .hero button {
+            background: #061d36;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .market-chart {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        .feature {
+            background: white;
+            padding: 20px;
+            width: 30%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .feature h3 {
+            color: #061d36;
+        }
+
+        .faq {
+            padding: 40px 20px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .faq h2 {
+            color: #061d36;
+        }
+
+        .faq p {
+            font-size: 1.1em;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Search Box Styling */
+        .search-box {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .search-box input {
+            padding: 10px;
+            width: 250px;
+            font-size: 1.2em;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            background: #061d36;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .search-box button:hover {
+            background: #043f5f;
+        }
+
+        .chat-icon {
+         position: fixed;
+         bottom: 20px;
+         right: 20px;
+         width: 60px;
+         height: 60px;
+         cursor: pointer;
+         z-index: 1000;
+     }
+ 
+     /* Chat Popup */
+     .chat-popup {
+         position: fixed;
+         bottom: 80px;
+         right: 20px;
+         width: 300px;
+         height: 400px;
+         background: white;
+         border: 1px solid #ccc;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+         border-radius: 10px;
+         display: none;
+         z-index: 1000;
+     }
+ 
+     /* Chat Header */
+     .chat-header {
+         background: #061d36;
+         color: white;
+         padding: 10px;
+         text-align: center;
+         font-weight: bold;
+         border-top-left-radius: 10px;
+         border-top-right-radius: 10px;
+     }
+ 
+     /* Chat Body */
+     .chat-body {
+         padding: 10px;
+         height: 320px;
+         overflow-y: auto;
+         font-size: 14px;
+     }
+ 
+     /* Chat Input */
+     .chat-footer {
+         padding: 0px;
+         border-top: 1px solid #ccc;
+         display: flex;
+         gap: 5px;
+     }
+ 
+     .chat-footer input {
+         flex: 1;
+         padding: 8px;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+     }
+ 
+     .chat-footer button {
+         padding: 8px 12px;
+         background: #061d36;
+         color: white;
+         border: none;
+         border-radius: 5px;
+         cursor: pointer;
+     }
+     
+     .fade-in {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>AI Chatbot for Mutual Funds & Stocks</h1>
+        <p>Get real-time stock advice and mutual fund recommendations!</p>
+    </header>
+
+    <section class="hero fade-in">
+        <h2>Your AI-Powered Investment Assistant</h2>
+        <p>Get instant stock analysis, mutual fund suggestions, and expert insights!</p>
+        <!-- <button onclick="startChat()">Start Chatting Now</button> -->
+    </section>
+
+    <section class="market-chart fade-in">
+        <h2>Live Market Overview</h2>
+
+        <!-- Search Box for Finding Stocks -->
+        <div class="search-box">
+            <input type="text" id="stockSearch" placeholder="Enter company name (e.g., TCS, Infosys)">
+            <button onclick="searchStock()">Search</button>
+        </div>
+
+        <img src="chatbot-img.png" alt="Chat" class="chat-icon" onclick="toggleChat()">
+ 
+ <!-- Chat Popup -->
+    <div id="chatPopup" class="chat-popup">
+        <div class="chat-header">Chatbot</div>
+        <div class="chat-body" id="chatBody">
+        <p><strong>Bot:</strong> Hello! How can I assist you?</p>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+<script>
+        function toggleChat() {
+         var chatPopup = document.getElementById("chatPopup");
+         chatPopup.style.display = chatPopup.style.display === "none" || chatPopup.style.display === "" ? "block" : "none";
+     }
+ 
+     function sendMessage() {
+         var input = document.getElementById("chatInput");
+         var chatBody = document.getElementById("chatBody");
+ 
+         if (input.value.trim() !== "") {
+             chatBody.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
+             input.value = "";
+             chatBody.scrollTop = chatBody.scrollHeight;
+         }
+     }
+ 
+     // Send message on Enter key press
+     document.getElementById("chatInput").addEventListener("keydown", function (event) {
+         if (event.key === "Enter") {
+             event.preventDefault(); // Prevent line break in input
+             sendMessage();
+         }
+     });
+
+     document.addEventListener("DOMContentLoaded", function () {
+    const elements = document.querySelectorAll(".fade-in");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    });
+
+    elements.forEach((el) => observer.observe(el));
+});
+
+</script>
+
+        <!-- Chart Container -->
+        <div id="chart-container">
+            <script type="text/javascript"
+                src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js">
+                    {
+                        "showChart": true,
+                            "locale": "en",
+                                "width": "100%",
+                                    "height": "500",
+                                        "colorTheme": "light",
+                                            "gridLineColor": "#e9e9ea",
+                                                "trendLineColor": "#2962FF",
+                                                    "fontColor": "#787B86",
+                                                        "symbols": [
+                                                            { "s": "NSE:RELIANCE", "d": "Reliance Industries" },
+                                                            { "s": "NSE:TCS", "d": "Tata Consultancy Services" },
+                                                            { "s": "NSE:INFY", "d": "Infosys" }
+                                                        ]
+                    }
+                </script>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <h3>Real-Time Stock Analysis</h3>
+            <p>Live stock market insights for better investment decisions.</p>
+        </div>
+        <div class="feature">
+            <h3>Personalized Mutual Fund Suggestions</h3>
+            <p>AI-driven mutual fund recommendations based on your goals.</p>
+        </div>
+        <div class="feature">
+            <h3>Instant Financial Advice</h3>
+            <p>Ask questions and get instant, reliable financial guidance.</p>
+        </div>
+    </section>
+
+    <section class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <p><strong>How does this chatbot work?</strong><br>Simply ask your investment-related questions and receive
+            AI-powered responses instantly.</p>
+        <p><strong>Is it free?</strong><br>Yes! You can start using the chatbot for free, with premium features
+            available.</p>
+        <p><strong>How accurate are the recommendations?</strong><br>The AI uses market trends and financial data for
+            its suggestions, but always do your own research.</p>
+    </section>
+
+    <section class="location-section" style="text-align: center; padding: 20px;">
+        <h2>Our Location</h2>
+        <p>Pillai College of Engineering, Navi Mumbai</p>
+        
+        <!-- Google Maps Embed -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3772.669319454147!2d73.12509517466312!3d18.990206054661364!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7e866de88667f%3A0xc1c5d5badc610f5f!2sPillai%20College%20of%20Engineering%2C%20New%20Panvel%20(Autonomous)!5e0!3m2!1sen!2sin!4v1742929310142!5m2!1sen!2sin" 
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </section>
+    
+
+    <footer>
+        <p>&copy; 2025 AI Chatbot for Mutual Funds and Stocks | All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function startChat() {
+            if (confirm("Are you ready to chat with the AI chatbot?")) {
+                window.location.href = 'http://192.168.1.100/chatbot';
+            }
+        }
+
+        function searchStock() {
+            var stockInput = document.getElementById("stockSearch").value.toUpperCase();
+            var stockMapping = {
+                "RELIANCE": "NSE:RELIANCE",
+                "TCS": "NSE:TCS",
+                "INFOSYS": "NSE:INFY",
+                "HDFC": "NSE:HDFCBANK",
+                "ITC": "NSE:ITC",
+                "WIPRO": "NSE:WIPRO"
+            };
+
+            if (stockInput in stockMapping) {
+                var newSymbol = stockMapping[stockInput];
+
+                // Replace the existing chart
+                document.getElementById("chart-container").innerHTML = `
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js">
+                    {
+                      "showChart": true,
+                      "locale": "en",
+                      "width": "100%",
+                      "height": "500",
+                      "colorTheme": "light",
+                      "gridLineColor": "#e9e9ea",
+                      "trendLineColor": "#2962FF",
+                      "fontColor": "#787B86",
+                      "symbols": [{ "s": "${newSymbol}", "d": "${stockInput}" }]
+                    }
+    </script>
+    </script>
+
+    
+
+</body>
+
+</html>

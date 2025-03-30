@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('image.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed; /* Prevent scrolling of background */
+            background-repeat: no-repeat;
+X            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: rgba(18, 19, 104, 0.8); /* Slight transparency for readability */
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+        header h1 {
+            font-size: 2.5em;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            opacity: 0.9; /* Slight transparency for the form */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 1.1em;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #061d36;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            width: 50%; /* Adjust width */
+            max-width: 300px; /* Limit maximum width */
+            display: block;
+            margin: 20px auto; /* Center the button */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #061d36; /* Slightly darker hover color */
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .forgot-password {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+        .forgot-password a {
+            color: #061d36;
+            text-decoration: none;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Login to Your Account</h1>
+        <p>Enter your credentials to access the AI Chatbot for Mutual Funds and Stocks</p>
+    </header>
+
+    <!-- Login Form -->
+    <div class="container">
+        <form id="loginForm" action="homepage.html" method="GET">
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <span class="error" id="usernameError"></span>
+            </div>
+
+            <!-- Email ID Field -->
+            <div class="form-group">
+                <label for="email_id">Email ID:</label>
+                <input type="email" id="email_id" name="email_id" required>
+                <span class="error" id="emailError"></span>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <span class="error" id="passwordError"></span>
+            </div>
+
+            <!-- Forgot Password Link -->
+            <div class="forgot-password">
+                <a href="forgot-password.html">Forgot Password?</a>
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 AI Chatbot for Mutual Funds and Stocks | All Rights Reserved.</p>
+    </footer>
+
+    <!-- Link to External JavaScript -->
+    <script src="login.js"></script>
+
+</body>
+</html>
